@@ -17,19 +17,19 @@ fs.writeFile('./docs/blog1.txt',"hello ahmed the warrior", ()=>{
 })
 
 // redirect file
-if (!fs.existsSync('assets')){
-    fs.mkdir('./assets', (err)=>{
-        if(err){
-            console.log(err);
-        }
+// if (!fs.existsSync('assets')){
+//     fs.mkdir('./assets', (err)=>{
+//         if(err){
+//             console.log(err);
+//         }
 
-        console.log('folder created');
-    })
-} else{
-    fs.rmdir('./assets', ()=>{
-        console.log('file removed')
-    })
-}
+//         console.log('folder created');
+//     })
+// } else{
+//     fs.rmdir('./assets', ()=>{
+//         console.log('file removed')
+//     })
+// }
 
 // delete file
 if(fs.existsSync('deleted.txt')){
