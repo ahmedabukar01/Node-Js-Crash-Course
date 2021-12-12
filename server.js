@@ -1,22 +1,39 @@
 const http = require('http');
 const fs = require('fs');
-const { ESRCH } = require('constants');
+
 
 const server = http.createServer((req,res)=>{
     console.log(req.url)
 
     // setting the headers
     res.setHeader('content-type', 'text/html');
+
+    let path="./view/";
+
+    switch(req.url){
+        case "/": path+="index.html";
+                res.statusCode = 200;
+                break;
+        case "/about": path+="about.html";
+                res.statusCode = 200;
+                break;
+        case "/aboutme":
+                res.statusCode = 301;
+                res.setHeader('Location', '/about');
+                break;
+        default: path+="404.html";
+                res.statusCode = 404;
+    }
     
     // read html file
-    fs.readFile('./view/index.html',(err,data)=>{
+    fs.readFile(path,(err,data)=>{
         if(err){
             console.log(err);
             res.end();
+        } else{
+            res.write(data);
+            res.end();
         }
-
-        res.write(data);
-        res.end();
     })
 })
 
