@@ -29,14 +29,14 @@ app.get('/', (req,res)=>{
 })
 
 app.get('/about',(req,res)=>{
-   res.render('about',{title: 'how about this'});
+   res.render('about',{title: 'About'});
 })
 
 app.get('/blogs/create',(req,res)=>{
-    res.render('create');
+    res.render('create', {title: 'Create'});
 })
 
 // 404 erros
 app.use((req,res)=>{
-    res.status(404).render('404');
+    res.status(404).render('404',{title: 'error'});
 })
