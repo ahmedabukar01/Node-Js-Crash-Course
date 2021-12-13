@@ -18,12 +18,18 @@ app.listen('3000',()=>{
 //     res.sendFile('./view/index.html',{root: __dirname});
 // })
 
+
 app.get('/', (req,res)=>{
-    res.render('index');
+    const blogs = [
+        {title: 'how to get 10 million dollars', snippet: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas repellat nesciunt eligendi excepturi delectus minus qui necessitatibus odio sint.'},
+        {title: 'how to get 10 million dollars', snippet: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas repellat nesciunt eligendi excepturi delectus minus qui necessitatibus odio sint.'},
+        {title: 'how to get 10 million dollars', snippet: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas repellat nesciunt eligendi excepturi delectus minus qui necessitatibus odio sint.'}
+    ];
+    res.render('index', {title: 'home', blogs});
 })
 
 app.get('/about',(req,res)=>{
-   res.render('about');
+   res.render('about',{title: 'how about this'});
 })
 
 app.get('/blogs/create',(req,res)=>{

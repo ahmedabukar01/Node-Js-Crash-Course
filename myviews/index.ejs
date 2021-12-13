@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Blog</title>
+    <title>Site Blog | <%= title %></title>
 </head>
 <body>
     <nav>
@@ -20,6 +20,18 @@
     </nav>
     <div class="blogs content">
         <h2>All Blogs</h2>
+
+        <% if(blogs.length > 0) { %>
+            <% blogs.forEach(blog => { %>
+
+                <h4 class="title"><%= blog.title %></h4>
+                <p class="snippet"><%= blog.snippet %></p>
+
+            <% }) %>
+        <% } else{ %>
+            <p>there no blogs to desplay :(</p>
+       <% } %>
+
     </div>
 </body>
 </html>
