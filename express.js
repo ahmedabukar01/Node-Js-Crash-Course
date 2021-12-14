@@ -30,6 +30,8 @@ app.listen('3000',()=>{
 //     next();
 // })
 
+// middleware & static files
+app.use(express.static('public'));
 app.use(morgan('dev'));
 
 app.get('/', (req,res)=>{
