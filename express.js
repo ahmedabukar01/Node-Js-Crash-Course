@@ -3,6 +3,7 @@ const fs = require('fs');
 const _ = require('lodash')
 
 const app = express();
+const morgan = require('morgan');
 
 app.set('view engine', 'ejs');
 app.set('views','myviews')
@@ -18,6 +19,18 @@ app.listen('3000',()=>{
 //     res.sendFile('./view/index.html',{root: __dirname});
 // })
 
+
+// Middleware
+
+// app.use((req,res, next)=>{
+//     console.log('in the middleware')
+//     console.log(req.hostname)
+//     console.log(req.path)
+//     console.log(req.method)
+//     next();
+// })
+
+app.use(morgan('dev'));
 
 app.get('/', (req,res)=>{
     const blogs = [
