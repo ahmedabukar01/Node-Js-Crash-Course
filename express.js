@@ -1,9 +1,10 @@
 const express = require('express');
+const app = express();
 const fs = require('fs');
 const _ = require('lodash')
 const mangoose = require('mongoose')
-const app = express();
 const morgan = require('morgan');
+const Blog = require('./models/blogs');
 
 app.set('view engine', 'ejs');
 app.set('views','myviews')
@@ -38,6 +39,23 @@ mangoose.connect(mdUrl)
 }))
 .catch((err)=> console.log(err));
 
+// mongoose and mongo sandbox routs
+app.get('/add-new', (req,res)=>{
+    const blog = new Blog({
+        title: 'What is blog',
+        snippet: 'how about my new mongo db database',
+        body: 'mongo db is the best non-sql database :) '
+    });
+
+    blog.save()
+    .then((result)=>{
+        res.send(result)
+    })
+    .catch(err=>console.log(err));
+})
+
+
+// express
 app.get('/', (req,res)=>{
     const blogs = [
         {title: 'how to get 10 million dollars', snippet: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas repellat nesciunt eligendi excepturi delectus minus qui necessitatibus odio sint.'},
