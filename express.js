@@ -1,16 +1,12 @@
 const express = require('express');
 const fs = require('fs');
 const _ = require('lodash')
-
+const mangoose = require('mongoose')
 const app = express();
 const morgan = require('morgan');
 
 app.set('view engine', 'ejs');
 app.set('views','myviews')
-
-app.listen('3000',()=>{
-    console.log('express request has been made :)');
-})
 
 
 // normal GET request 
@@ -34,7 +30,13 @@ app.listen('3000',()=>{
 app.use(express.static('public'));
 app.use(morgan('dev'));
 
-const mdUrl = 'mongodb+srv://ahmed:ahmed123@mymango.oifxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+// mango db
+const mdUrl = 'mongodb+srv://ahmed:ahmed123@mymango.oifxe.mongodb.net/my-mangodb?retryWrites=true&w=majority';
+mangoose.connect(mdUrl)
+.then((result)=> app.listen('3000',()=>{
+    console.log('express request has been made :)');
+}))
+.catch((err)=> console.log(err));
 
 app.get('/', (req,res)=>{
     const blogs = [
