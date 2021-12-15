@@ -34,6 +34,8 @@ app.listen('3000',()=>{
 app.use(express.static('public'));
 app.use(morgan('dev'));
 
+const mdUrl = 'mongodb+srv://ahmed:ahmed123@mymango.oifxe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+
 app.get('/', (req,res)=>{
     const blogs = [
         {title: 'how to get 10 million dollars', snippet: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas repellat nesciunt eligendi excepturi delectus minus qui necessitatibus odio sint.'},

@@ -13,6 +13,8 @@
 
 const fs = require('fs');
 const http = require('http');
+const express = require('express');
+const app = express();
 
 // fs.writeFile('./nor.txt','hey weredddd are writing something', (err,data)=>{
 //     if(err){
@@ -69,15 +71,30 @@ const http = require('http');
 //     console.log('request is bein made')
 // })
 
-const express = require('express');
+// const express = require('express');
 
-const app = express();
+// const app = express();
 
-app.get('/',(req,res)=>{
-  res.sendFile('./myviews/html/index.html',{root: __dirname})
+// app.get('/',(req,res)=>{
+//   res.sendFile('./myviews/html/index.html',{root: __dirname})
+// })
+// app.get('/us',(req,res)=>{
+//  res.redirect('/')
+// })
+
+// app.listen('3000')
+
+
+    // EJS
+
+app.listen('3000',()=>{
+  console.log('hey We are listining something you literaly dont know');
 })
-app.get('/us',(req,res)=>{
- res.redirect('/')
-})
 
-app.listen('3000')
+app.set('view engine','ejs');
+app.set('views','docs');
+
+app.get('/', (req,res)=>{
+  const who = [{name: 'nor', age: '30'},{name: 'Ali', age: '54'}]
+  res.render('test', {title: 'Testing Blog', who});
+})

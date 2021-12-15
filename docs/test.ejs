@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h1>Ejs Home of testing</h1>
+    <p>We play to win the Game!</p>
+
+    <h2>Just Something You dont know.</h2>
+    <% if(who.length > 0) { %>
+        <% who.forEach(we=>{ %>
+            <h4><%= we.name%>, <%=we.age%></h4>
+       <% }) %>
+        <%}%>
+</body>
+</html>
