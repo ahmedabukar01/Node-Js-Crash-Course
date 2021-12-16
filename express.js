@@ -40,30 +40,47 @@ mangoose.connect(mdUrl)
 .catch((err)=> console.log(err));
 
 // mongoose and mongo sandbox routs
-app.get('/add-new', (req,res)=>{
-    const blog = new Blog({
-        title: 'What is blog',
-        snippet: 'how about my new mongo db database',
-        body: 'mongo db is the best non-sql database :) '
-    });
 
-    blog.save()
-    .then((result)=>{
-        res.send(result)
-    })
-    .catch(err=>console.log(err));
-})
+// app.get('/add-new', (req,res)=>{
+//     const blog = new Blog({
+//         title: 'What is blog',
+//         snippet: 'how about my new mongo db database',
+//         body: 'mongo db is the best non-sql database :) '
+//     });
 
+//     blog.save()
+//     .then((result)=>{
+//         res.send(result)
+//     })
+//     .catch(err=>console.log(err));
+// });
+
+// app.get('/all-blogs', (req,res)=>{
+//     Blog.find()
+//     .then(result=>{
+//         res.send(result);
+//     })
+//     .catch(err=>console.log(err));
+// })
+
+// app.get('/single', (req,res)=>{
+//     Blog.findById('61ba96e0d91f755e6a26f17a')
+//     .then(result=>res.send(result))
+//     .catch(err=>console.log(err));
+// })
 
 // express
 app.get('/', (req,res)=>{
-    const blogs = [
-        {title: 'how to get 10 million dollars', snippet: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas repellat nesciunt eligendi excepturi delectus minus qui necessitatibus odio sint.'},
-        {title: 'how to get 10 million dollars', snippet: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas repellat nesciunt eligendi excepturi delectus minus qui necessitatibus odio sint.'},
-        {title: 'how to get 10 million dollars', snippet: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas repellat nesciunt eligendi excepturi delectus minus qui necessitatibus odio sint.'}
-    ];
-    res.render('index', {title: 'home', blogs});
+   res.redirect('/blogs');
 })
+
+app.get('/blogs',(req,res)=>{
+    Blog.find().sort({createdAt: -1})
+    .then((result)=>{
+        res.render('index', {title: 'All blogs', blogs: result});
+    })
+    .catch(err=>console.log(err));
+});
 
 app.get('/about',(req,res)=>{
    res.render('about',{title: 'About'});
