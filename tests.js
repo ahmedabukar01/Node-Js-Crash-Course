@@ -15,7 +15,11 @@ const fs = require('fs');
 const http = require('http');
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
 
+const Blog = require('./people');
+
+app.use(express.static('public'));
 // fs.writeFile('./nor.txt','hey weredddd are writing something', (err,data)=>{
 //     if(err){
 //         console.log(err);
@@ -85,16 +89,50 @@ const app = express();
 // app.listen('3000')
 
 
-    // EJS
+    // EJS & mongoose
 
-app.listen('3000',()=>{
-  console.log('hey We are listining something you literaly dont know');
-})
+  const db = 'mongodb+srv://ahmed:ahmed123@mymango.oifxe.mongodb.net/own?retryWrites=true&w=majority';
+
+mongoose.connect(db)
+.then((result)=>
+    app.listen('3000',()=>{
+    console.log('hey We are listining something you literaly dont know');
+  })
+)
+.catch(err=>console.log(err));
+
+// mongoose.connect(db)
+// .then((result)=> app.listen('3000',()=>{
+//     console.log('express request has been made :)');
+// }))
+// .catch((err)=> console.log(err));
+
 
 app.set('view engine','ejs');
-app.set('views','docs');
+app.set('views','myviews');
+
+// app.get('/test', (req,res)=>{
+//   const who = [{name: 'nor', age: '30'},{name: 'Ali', age: '54'}]
+//   res.render('index', {title: 'Testing Blog', who});
+// })
+
+// add some data to the database
+app.get('/add-blog',(req,res)=>{
+  const blog = new Blog({
+    title: 'hey here we are gangs 3',
+    snippet: 'Please introduce your self.',
+    body: 'We are the rarest thing on earth :)'
+  });
+
+  blog.save()
+    .then(result=>{
+      res.send(result)
+    })
+})
 
 app.get('/', (req,res)=>{
-  const who = [{name: 'nor', age: '30'},{name: 'Ali', age: '54'}]
-  res.render('test', {title: 'Testing Blog', who});
+  Blog.find().sort({createdAt: -1})
+    .then(result=>{
+      res.render('index',{title: 'All Blogs', blogs: result})
+    })
 })
