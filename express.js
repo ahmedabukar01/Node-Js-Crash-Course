@@ -113,7 +113,16 @@ app.get('/blogs/:id',(req,res)=>{
     })
 })
 
+app.delete('/blogs/:id',(req,res)=>{
+    const id = req.params.id;
 
+    Blog.findByIdAndDelete(id)
+    .then(result=>{
+        res.json({redirect: '/blogs'});
+    })
+    .catch(err=>console.log(err));
+
+})
 // 404 erros
 app.use((req,res)=>{
     res.status(404).render('404',{title: 'error'});
