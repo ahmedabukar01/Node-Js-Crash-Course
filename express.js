@@ -4,7 +4,7 @@ const fs = require('fs');
 const _ = require('lodash')
 const mangoose = require('mongoose')
 const morgan = require('morgan');
-const Blog = require('./models/blogs');
+const blogRoutes = require('./routes/blogRoutes');
 
 app.set('view engine', 'ejs');
 app.set('views','myviews')
@@ -32,6 +32,8 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}))
 // app.use(express.urlencoded({extended: true})) this is optional
 app.use(morgan('dev'));
+// app.use(blogRoutes);
+app.use('/blogs', blogRoutes)
 
 // mango db
 const mdUrl = 'mongodb+srv://ahmed:ahmed123@mymango.oifxe.mongodb.net/my-mangodb?retryWrites=true&w=majority';
@@ -76,53 +78,10 @@ app.get('/', (req,res)=>{
    res.redirect('/blogs');
 })
 
-app.get('/blogs',(req,res)=>{
-    Blog.find().sort({createdAt: -1})
-    .then((result)=>{
-        res.render('index', {title: 'All blogs', blogs: result});
-    })
-    .catch(err=>console.log(err));
-});
-
 app.get('/about',(req,res)=>{
    res.render('about',{title: 'About'});
 })
 
-app.get('/blogs/create',(req,res)=>{
-    res.render('create', {title: 'Create'});
-})
-
-// post request
-app.post('/blogs', (req,res)=>{
-    const newBlog = new Blog(req.body);
-    newBlog.save()
-        .then(result=>{
-            console.log('data has beens saved')
-            res.redirect('/blogs')
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-})
-
-app.get('/blogs/:id',(req,res)=>{
-    const id = req.params.id;
-    Blog.findById(id)
-    .then(result=>{
-        res.render('details', {title: 'Detials', blog: result});
-    })
-})
-
-app.delete('/blogs/:id',(req,res)=>{
-    const id = req.params.id;
-
-    Blog.findByIdAndDelete(id)
-    .then(result=>{
-        res.json({redirect: '/blogs'});
-    })
-    .catch(err=>console.log(err));
-
-})
 // 404 erros
 app.use((req,res)=>{
     res.status(404).render('404',{title: 'error'});
